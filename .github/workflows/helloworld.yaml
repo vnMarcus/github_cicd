@@ -4,27 +4,38 @@ on:
   push:
     branches: [main]
   pull_request:
-    type: [opened, reopened, synchronize]
+    types: [opened, synchronize]
   workflow_dispatch:
 
 jobs:
-  Coverage-report:
+  coverage-report:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Run tests and generate coverage report
+
+      - name: Run tests
         run: |
-          python flask/server.py test
-      - uses: ArtiomTr/jest-coverage-report-action@v2.0-rc.6
+          python test.py
+
+      - name: Generate coverage report
+        run: |
+          python -m coverage run test.py
+          python -m coverage report -m
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          threshold: 90
-          skip-step: install
+          name: coverage-report
+          path: ./htmlcov
