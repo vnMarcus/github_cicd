@@ -27,6 +27,7 @@ jobs:
 
       - name: Run tests
         run: |
+          python app.py
           python test.py
 
       - name: Generate coverage report
