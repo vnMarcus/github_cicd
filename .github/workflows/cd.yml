@@ -20,7 +20,14 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build the Docker image
-        run: docker build /home/runner/work/github_cicd/github_cicd/roles/db/templates --file /home/runner/work/github_cicd/github_cicd/roles/db/templates/Dockerfile --tag db-image:latest
+        run: |
+          cd /home/runner/work/github_cicd/github_cicd/roles/db/templates
+          docker build -t db:v.1.0.2 .
+          docker tag db:v.1.2 ndvinhcn/test:v.1.0.2
+
+          
+        
 
       - name: Docker Push
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/test:db-image:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/test:v.1.0.2
+
