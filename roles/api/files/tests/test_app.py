@@ -1,49 +1,49 @@
 import unittest
-from flask import Flask
-from app import app
+import requests
 
-class AppTestCase(unittest.TestCase):
 
-    def setUp(self):
-        app.config['TESTING'] = True
-        self.app = app.test_client()
+URL = "http://127.0.0.1:9090"
 
-    def test_index(self):
-        response = self.app.get('/list')
+
+class TestApp(unittest.TestCase):
+
+    # Test web page.
+    def test_get_all_students(self):
+        response = requests.get(f"{URL}/list")
         self.assertEqual(response.status_code, 200)
 
-    def test_add_student(self):
+    def test_insert_student(self):
         data = {
-            "id": 1,
-            "name": "John Doe",
-            "username": "johndoe",
-            "birth": 1990,
-            "sex": "male",
-            "university": "Example University",
-            "major": "Computer Science"
+            'id': 37,
+            'name': 'Bùi Minh Sơn',
+            'username': 'minhson',
+            'birth': 2002,
+            'sex': 'Nam',
+            'university': 'Đại học Công nghệ - Đại học Quốc gia Hà Nội',
+            'major': 'Công nghệ thông tin'
         }
-        response = self.app.post('/addStudent', json=data)
+        response = requests.post(f"{URL}/addStudent", json=data)
         self.assertEqual(response.status_code, 201)
 
     def test_delete_student(self):
-        response = self.app.delete('/deleteStudent/1')
+        response = requests.delete(f"{URL}/deleteStudent/29")
         self.assertEqual(response.status_code, 200)
 
-    def test_view_student(self):
-        response = self.app.get('/view/1')
+    def test_get_by_id(self):
+        response = requests.get(f"{URL}/view/29")
         self.assertEqual(response.status_code, 200)
 
     def test_update_student(self):
         data = {
-            "name": "Jane Smith",
-            "username": "janesmith",
-            "birth": 1992,
-            "sex": "female",
-            "university": "Example University",
-            "major": "Computer Science"
+            'name': 'Bùi Minh Sơn',
+            'username': 'minhson',
+            'birth': 2002,
+            'sex': 'Nam',
+            'university': 'Đại học Công nghệ - Đại học Quốc gia Hà Nội',
+            'major': 'Công nghệ thông tin'
         }
-        response = self.app.put('/updateStudent/1', json=data)
-        self.assertEqual(response.status_code, 200)
+        response = requests.put(f"{URL}/updateStudent/29", json=data)
+        self.assertEqual(response.status_code, 201)
 
 if __name__ == '__main__':
     unittest.main()

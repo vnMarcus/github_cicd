@@ -45,4 +45,5 @@ jobs:
           MONGODB_URI: mongodb://db:27017/
         run: |
           python roles/api/files/app.py
+          python roles/api/files/test/test_app.py
  
