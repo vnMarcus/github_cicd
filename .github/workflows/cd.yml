@@ -1,8 +1,9 @@
-name: Publish Docker Image to Docker Hub
-
+name: release
 on:
   push:
-    branches: ['master']
+    # Pattern matched against refs/tags
+    tags:        
+      - '**'           # Push events to every tag not containing /
 
 jobs:
   build:
