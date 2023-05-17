@@ -23,7 +23,7 @@ jobs:
         run: |
           cd /home/runner/work/github_cicd/github_cicd/roles/db/templates
           docker build -t db:v.1.0.2 .
-          docker tag db:v.1.2 ndvinhcn/test:v.1.0.2
+          docker tag db:v.1.0.2 ndvinhcn/test:v.1.0.2
 
           
         
