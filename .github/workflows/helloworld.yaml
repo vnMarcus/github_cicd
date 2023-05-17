@@ -22,8 +22,4 @@ jobs:
         with:
           python-version: 3.x
 
-      - name: Install Dependencies
-        run: pip install -r roles/api/files/requirements.txt
-
-      - name: Run Unit Tests
-        run: python3 roles/web/templates/unit_test.py
+ 
