@@ -1,14 +1,8 @@
-
 name: Publish Docker Image to Docker Hub
 
 on:
   push:
-    branches: ['main']
-    # Pattern matched against refs/tags
-    tags:        
-      - '**'           # Push events to every tag not containing /
-
-
+    branches: ['master']
 
 jobs:
   build:
@@ -23,9 +17,8 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push db
-        uses: docker/build-push-action@v4
-        with: 
-            push: true
-            tags: ${{ secrets.DOCKERHUB_USERNAME }}/test
-            context: ${{ env.CURRENT_DIR }}/db/templates/
+      - name: Build the Docker image
+        run: docker build ./roles/db/templates --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/db_images
+
+      - name: Docker Push
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/test
