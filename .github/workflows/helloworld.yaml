@@ -40,7 +40,9 @@ jobs:
         run:
           python roles/api/files/manage.py test
       
-      - name: unit test
+      - name: Run Python File
+        env:
+          MONGODB_URI: mongodb://db:27017/
         run: |
-          python 
+          python roles/api/files/app.py
  
