@@ -1,31 +1,27 @@
-name: release
+# .github/workflows/docker-build.yml
+
+name: Docker Build and Push
+
 on:
   push:
-    # Pattern matched against refs/tags
-    tags:        
-      - '**'           # Push events to every tag not containing /
+    tags:
+      - '*'
+
 jobs:
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
-    environment: release
-    env:
-      GH_ACTION: enable
-      URL: https://github.com/vnMarcus/github_cicd
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build Docker image
-        run: docker build -t your-docker-image:latest ./roles/db/templates
-
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
-            username: ${{ secrets.DOCKERHUB_USERNAME }}
-            password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Build and Push Docker image
         run: |
-          docker build -t db:latest ./roles/api/files
-          docker push db:latest
+          docker build -t your-docker-image:latest ./roles/api/files
+          docker push your-docker-image:latest
