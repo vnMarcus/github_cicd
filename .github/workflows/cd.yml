@@ -3,9 +3,9 @@ name: Publish Docker Image to Docker Hub
 on:
   push:
     branches: ['main']
-    tags:
-      - '**' # Push events to every tag not containing /
-
+    # Pattern matched against refs/tags
+    tags:        
+      - '**'           # Push events to every tag not containing /
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,11 +19,8 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - id: docker-build
-        name: Build the image
-        run: docker build /home/runner/work/github_cicd/github_cicd/roles/db/templates --file Dockerfile --tag v1.0.12
+      - name: Build the Docker image
+        run: docker build /home/runner/work/github_cicd/github_cicd/roles/db/templates --file /home/runner/work/github_cicd/github_cicd/roles/db/templates/Dockerfile --tag db-image:latest
 
-      - name: Push docker image to DockerHub
-        run: |
-          docker push v1.0.12
-
+      - name: Docker Push
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/test:db-image:latest
