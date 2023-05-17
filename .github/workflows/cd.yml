@@ -19,8 +19,11 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build the Docker image
-        run: docker build /home/runner/work/github_cicd/github_cicd/roles/db/templates --file /home/runner/work/github_cicd/github_cicd/roles/db/templates/Dockerfile --tag db-image:latest
+      - id: docker-build
+        name: Build the image
+        run: export DOCKER_TAG=${{ env.DOCKER_TAG }} && docker build ./roles/api/files --file Dockerfile --tag v1.0.10
 
-      - name: Docker Push
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/test:db-image:latest
+      - name: Push docker image to DockerHub
+        run: |
+          docker push v1.0.10
+
