@@ -21,7 +21,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build the Docker image
-        run: docker build ${{ github.workspace }}/roles/db/templates --file ${{ github.workspace }}/roles/db/templates/Dockerfile --tag ***/db_images
+        run: docker build /home/runner/work/github_cicd/github_cicd/roles/db/templates --file /home/runner/work/github_cicd/github_cicd/roles/db/templates/Dockerfile --tag db-image:latest
 
       - name: Docker Push
         run: docker push ${{ secrets.DOCKER_USERNAME }}/test
