@@ -4,22 +4,21 @@ on:
     # Pattern matched against refs/tags
     tags:        
       - '**'           # Push events to every tag not containing /
-
+jobs:
 jobs:
   build:
-    # Đặt runner (GitLab) hoặc trigger (GitHub) cho công việc này
-    # ...
+    runs-on: ubuntu-latest
+    environment: release
+    env:
+      GH_ACTION: enable
+      URL: https://github.com/vnMarcus/github_cicd
 
-    # Khi có một tag mới được tạo, chạy các bước sau
-    if: ${{ startsWith(github.ref, 'refs/tags/') }}
-
-    # Bước thực hiện công việc
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Build Docker image
-        run: docker build -t your-docker-image:latest ./roles/api/files
+        run: docker build -t your-docker-image:latest ./roles/db/templates
 
       - name: Push Docker image to Docker Hub
         env:
