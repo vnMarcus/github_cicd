@@ -26,4 +26,4 @@ jobs:
         run: pip install -r roles/api/files/requirements.txt
 
       - name: Run Unit Tests
-        run: pytest roles/web/templates/unit_test.py
+        run: python3 roles/web/templates/unit_test.py
