@@ -21,9 +21,9 @@ jobs:
 
       - id: docker-build
         name: Build the image
-        run: export DOCKER_TAG=${{ env.DOCKER_TAG }} && docker build ./roles/api/files --file Dockerfile --tag v1.0.10
+        run: docker build ./roles/api/files --file Dockerfile --tag v1.0.11
 
       - name: Push docker image to DockerHub
         run: |
-          docker push v1.0.10
+          docker push v1.0.11
 
