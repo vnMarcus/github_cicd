@@ -43,7 +43,9 @@ jobs:
       - name: Run Python File
         env:
           MONGODB_URI: mongodb://db:27017/
-        run: |
-          python roles/api/files/app.py
-          python roles/api/files/test/test_app.py
+        run: python roles/api/files/app.py
+
+      - name: Run Unit Tests
+        run: python roles/api/files/test/test_app.py
+
  
