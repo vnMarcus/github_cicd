@@ -21,9 +21,9 @@ jobs:
 
       - id: docker-build
         name: Build the image
-        run: docker build ./roles/api/files --file Dockerfile --tag v1.0.11
+        run: docker build /home/runner/work/github_cicd/github_cicd/roles/db/templates --file Dockerfile --tag v1.0.12
 
       - name: Push docker image to DockerHub
         run: |
-          docker push v1.0.11
+          docker push v1.0.12
 
