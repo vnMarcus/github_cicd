@@ -22,11 +22,7 @@ jobs:
 
         
         
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
-        with:
-          images: ${{ secrets.DOCKER_USERNAME }}/test
+
       
       - name: Build and push db Docker image
         id: build_db_image
@@ -36,7 +32,8 @@ jobs:
           file: ./roles/db/templates/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/db_image:latest
-          labels: ${{ steps.meta.outputs.labels }}
+          labels: db_image
+
 
 
       - name: Build and push flask Docker image
