@@ -30,7 +30,7 @@ jobs:
           context: ./roles/db/templates/
           file: ./roles/db/templates/Dockerfile
           push: true
-          tags: db_image:latest
+          tags: db_image
           labels: db_image
 
 
