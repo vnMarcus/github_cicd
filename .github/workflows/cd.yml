@@ -19,21 +19,32 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
-        with:
-          images: ndvinhcn/test
-
-      - name: Build and push db Docker image
-        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
-        with:
-          context: ./roles/db/templates/
-          file: ./roles/db/templates/Dockerfile
-          push: true
-          tags: ndvinhcn/test/db_image
-
-
-
+      - name: Build the Docker db image
+        run: |
+          cd /home/runner/work/github_cicd/github_cicd/roles/db/templates
+          docker build -t db_image:v.1.0.3 .
+          docker tag db:v.1.0.3 ndvinhcn/test:v.1.0.3
+          
+      - name: Docker Push 
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/test:v.1.0.3
+        
+      - name: Build the Docker flask image
+        run: |
+          cd /home/runner/work/github_cicd/github_cicd/roles/api/files
+          docker build -t flask_image:v.1.0.2 .
+          docker tag flask_image:v.1.0.2 ndvinhcn/test:v.1.0.2
+          
+      - name: Docker Push
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/test:v.1.0.2
+      
+      - name: Build the Docker image
+        run: |
+          cd /home/runner/work/github_cicd/github_cicd/roles/web/templates
+          docker build -t nginx_image:v.1.0.2 .
+          docker tag nginx_image:v.1.0.2 ndvinhcn/test:v.1.0.2
+          
+      - name: Docker Push
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/test:v.1.0.2
+        
+        
         
