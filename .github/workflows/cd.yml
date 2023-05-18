@@ -3,9 +3,9 @@ name: Publish Docker Image to Docker Hub
 on:
   push:
     branches: ['main']
-    # Pattern matched against refs/tags
-    tags:        
-      - '**'           # Push events to every tag not containing /
+    tags:
+      - '**'
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,32 +19,20 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build the Docker db image
+      - name: Build and Push db Docker image
         run: |
-          cd /home/runner/work/github_cicd/github_cicd/roles/db/templates
-          docker build -t db_image:db .
-          docker tag db_image:db ndvinhcn/test:db
-          
-      - name: Docker Push db
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/test:db
-        
-      - name: Build the Docker flask image
+          cd roles/db/templates
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/test:db .
+          docker push ${{ secrets.DOCKER_USERNAME }}/test:db
+
+      - name: Build and Push flask Docker image
         run: |
-          cd /home/runner/work/github_cicd/github_cicd/roles/api/files
-          docker build -t flask_image:flask .
-          docker tag flask_image:flask ndvinhcn/test:flask
-          
-      - name: Docker Push flask
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/test:flask
-      
-      - name: Build the Docker image
+          cd roles/api/files
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/test:flask .
+          docker push ${{ secrets.DOCKER_USERNAME }}/test:flask
+
+      - name: Build and Push web Docker image
         run: |
-          cd /home/runner/work/github_cicd/github_cicd/roles/web/templates
-          docker build -t nginx_image:nginx .
-          docker tag nginx_image:nginx ndvinhcn/test:nginx
-          
-      - name: Docker Push
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/test:nginx
-        
-        
-        
+          cd roles/web/templates
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/test:nginx .
+          docker push ${{ secrets.DOCKER_USERNAME }}/test:nginx
