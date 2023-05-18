@@ -23,7 +23,7 @@ jobs:
         run: |
           cd /home/runner/work/github_cicd/github_cicd/roles/db/templates
           docker build -t db_image:v.1.0.3 .
-          docker tag db:v.1.0.3 ndvinhcn/test:v.1.0.3
+          docker tag db_image:v.1.0.3 ndvinhcn/test:v.1.0.3
           
       - name: Docker Push 
         run: docker push ${{ secrets.DOCKER_USERNAME }}/test:v.1.0.3
