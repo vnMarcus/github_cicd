@@ -35,7 +35,7 @@ jobs:
           tags: |
             ndvinhcn/db_image:latest
             ndvinhcn/db_image:${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+
 
       - name: Build and push flask Docker image
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
@@ -46,7 +46,7 @@ jobs:
           tags: |
             ndvinhcn/flask_image:latest
             ndvinhcn/flask_image:${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+
 
       - name: Build and push web Docker image
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
@@ -57,7 +57,7 @@ jobs:
           tags: |
             ndvinhcn/nginx_image:latest
             ndvinhcn/nginx_image:${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+
 
 
         
