@@ -30,8 +30,6 @@ jobs:
           push: true
           tags: ndvinhcn/test/db_image
 
-      -
-
 
 
         
