@@ -22,17 +22,17 @@ jobs:
       - name: Build the Docker db image
         run: |
           cd /home/runner/work/github_cicd/github_cicd/roles/db/templates
-          docker build -t db_image:latest .
-          docker tag db_image:latest ndvinhcn/test:latest
+          docker build -t db_image:db .
+          docker tag db_image:db ndvinhcn/test:db
           
       - name: Docker Push 
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/test:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/test:db
         
       - name: Build the Docker flask image
         run: |
           cd /home/runner/work/github_cicd/github_cicd/roles/api/files
-          docker build -t flask_image:latest .
-          docker tag flask_image:latest ndvinhcn/test:latest
+          docker build -t flask_image:flask .
+          docker tag flask_image:flask ndvinhcn/test:flask
           
       - name: Docker Push
         run: docker push ${{ secrets.DOCKER_USERNAME }}/test:latest
@@ -40,11 +40,11 @@ jobs:
       - name: Build the Docker image
         run: |
           cd /home/runner/work/github_cicd/github_cicd/roles/web/templates
-          docker build -t nginx_image:latest .
-          docker tag nginx_image:latest ndvinhcn/test:latest
+          docker build -t nginx_image:nginx .
+          docker tag nginx_image:nginx ndvinhcn/test:nginx
           
       - name: Docker Push
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/test:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/test:nginx
         
         
         
