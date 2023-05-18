@@ -25,14 +25,16 @@ jobs:
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
           images: ndvinhcn/test
-          
+
       - name: Build and push db Docker image
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
         with:
           context: ./roles/db/templates/
           file: ./roles/db/templates/Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: |
+            ndvinhcn/db_image:latest
+            ndvinhcn/db_image:${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Build and push flask Docker image
@@ -41,7 +43,9 @@ jobs:
           context: ./roles/api/files
           file: ./roles/api/files/Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: |
+            ndvinhcn/flask_image:latest
+            ndvinhcn/flask_image:${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Build and push web Docker image
@@ -50,7 +54,10 @@ jobs:
           context: ./roles/web/templates/
           file: ./roles/web/templates/Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: |
+            ndvinhcn/nginx_image:latest
+            ndvinhcn/nginx_image:${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
 
         
