@@ -25,7 +25,7 @@ jobs:
           docker build -t db_image:db .
           docker tag db_image:db ndvinhcn/test:db
           
-      - name: Docker Push 
+      - name: Docker Push db
         run: docker push ${{ secrets.DOCKER_USERNAME }}/test:db
         
       - name: Build the Docker flask image
@@ -34,8 +34,8 @@ jobs:
           docker build -t flask_image:flask .
           docker tag flask_image:flask ndvinhcn/test:flask
           
-      - name: Docker Push
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/test:latest
+      - name: Docker Push flask
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/test:flask
       
       - name: Build the Docker image
         run: |
