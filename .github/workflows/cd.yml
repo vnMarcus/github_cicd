@@ -35,7 +35,7 @@ jobs:
           context: ./roles/db/templates/
           file: ./roles/db/templates/Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/db_image
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Build and push flask Docker image
@@ -45,7 +45,7 @@ jobs:
           context: ./roles/api/files
           file: ./roles/api/files/Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/flask_image
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Build and push web Docker image
@@ -55,6 +55,6 @@ jobs:
           context: ./roles/web/templates/
           file: ./roles/web/templates/Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nginx_iamge
           labels: ${{ steps.meta.outputs.labels }}
 
